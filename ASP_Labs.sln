@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRChat", "SignalRChat\SignalRChat.csproj", "{B147ADC9-C29C-48A1-9BAF-EFA786991D91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcMovie", "MvcMovie\MvcMovie.csproj", "{DC322C30-E057-47E8-9A06-D68A5E8746A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{B147ADC9-C29C-48A1-9BAF-EFA786991D91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B147ADC9-C29C-48A1-9BAF-EFA786991D91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B147ADC9-C29C-48A1-9BAF-EFA786991D91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC322C30-E057-47E8-9A06-D68A5E8746A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC322C30-E057-47E8-9A06-D68A5E8746A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC322C30-E057-47E8-9A06-D68A5E8746A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC322C30-E057-47E8-9A06-D68A5E8746A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
