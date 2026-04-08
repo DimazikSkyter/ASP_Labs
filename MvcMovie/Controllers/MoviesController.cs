@@ -53,11 +53,18 @@ public class MoviesController : Controller
     // GET: Movies/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if (id == null) return NotFound();
+        if (id == null)
+        {
+            return NotFound();
+        }
 
-        var movie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
+        var movie = await _context.Movie
+            .FirstOrDefaultAsync(m => m.Id == id);
 
-        if (movie == null) return NotFound();
+        if (movie == null)
+        {
+            return NotFound();
+        }
 
         return View(movie);
     }
@@ -71,7 +78,7 @@ public class MoviesController : Controller
     // POST: Movies/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Movie movie)
+    public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
     {
         if (ModelState.IsValid)
         {
@@ -96,7 +103,7 @@ public class MoviesController : Controller
     // POST: Movies/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Movie movie)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
     {
         if (id != movie.Id) return NotFound();
 
@@ -113,11 +120,18 @@ public class MoviesController : Controller
     // GET: Movies/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if (id == null) return NotFound();
+        if (id == null)
+        {
+            return NotFound();
+        }
 
-        var movie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
+        var movie = await _context.Movie
+            .FirstOrDefaultAsync(m => m.Id == id);
 
-        if (movie == null) return NotFound();
+        if (movie == null)
+        {
+            return NotFound();
+        }
 
         return View(movie);
     }
