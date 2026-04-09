@@ -1,0 +1,92 @@
+@page
+@model MvcMovie.Pages.Movies.IndexModel
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<h1>Movies</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find:
+            <input type="text" name="searchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a asp-page="./Index">Back to full list</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            <a asp-page="./Index"
+               asp-route-sortOrder="@Model.TitleSort"
+               asp-route-currentFilter="@Model.CurrentFilter">
+                Title
+            </a>
+        </th>
+        <th>
+            <a asp-page="./Index"
+               asp-route-sortOrder="@Model.DateSort"
+               asp-route-currentFilter="@Model.CurrentFilter">
+                Release Date
+            </a>
+        </th>
+        <th>Genre</th>
+        <th>
+            <a asp-page="./Index"
+               asp-route-sortOrder="@Model.PriceSort"
+               asp-route-currentFilter="@Model.CurrentFilter">
+                Price
+            </a>
+        </th>
+        <th>Rating</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Movies)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.ReleaseDate.ToString("yyyy-MM-dd")</td>
+            <td>@item.Genre</td>
+            <td>@item.Price</td>
+            <td>@item.Rating</td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.Movies.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Movies.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Movies.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Movies.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

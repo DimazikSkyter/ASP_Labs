@@ -11,6 +11,7 @@ builder.Services.AddDbContext<MvcMovieContext>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
@@ -45,9 +46,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
 app.MapControllerRoute(
-    "default",
-    "{controller=Home}/{action=Index}/{id?}");
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 await app.RunAsync();
