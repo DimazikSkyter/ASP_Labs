@@ -10,19 +10,20 @@ public static class SeedData
         using var context = new MvcMovieContext(
             serviceProvider.GetRequiredService<DbContextOptions<MvcMovieContext>>());
 
-        if (context.Movie.Any())
+        if (context.Productions.Any())
         {
             return;
         }
-
-        context.Movie.AddRange(
+        Console.WriteLine("SeedData.Initialize called");
+        context.Productions.AddRange(
             new Movie
             {
                 Title = "When Harry Met Sally",
                 ReleaseDate = DateTime.Parse("1989-2-12"),
                 Genre = "Romantic Comedy",
                 Price = 7.99M,
-                Rating = "A"
+                Rating = "A",
+                DurationMinutes = 96
             },
             new Movie
             {
@@ -30,26 +31,20 @@ public static class SeedData
                 ReleaseDate = DateTime.Parse("1984-3-13"),
                 Genre = "Comedy",
                 Price = 8.99M,
-                Rating = "B"
+                Rating = "B",
+                DurationMinutes = 105
             },
-            new Movie
+            new Series
             {
-                Title = "Ghostbusters 2",
-                ReleaseDate = DateTime.Parse("1986-2-23"),
+                Title = "Friends",
+                ReleaseDate = DateTime.Parse("1994-9-22"),
                 Genre = "Comedy",
-                Price = 9.99M,
-                Rating = "C"
-            },
-            new Movie
-            {
-                Title = "Rio Bravo",
-                ReleaseDate = DateTime.Parse("1959-4-15"),
-                Genre = "Western",
-                Price = 3.99M,
-                Rating = "C"
+                Price = 19.99M,
+                Rating = "A",
+                SeasonsCount = 10
             }
         );
-
+        Console.WriteLine("Saving seed data...");
         context.SaveChanges();
     }
 }

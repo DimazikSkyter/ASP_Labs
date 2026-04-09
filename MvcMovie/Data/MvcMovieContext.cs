@@ -10,5 +10,17 @@ public class MvcMovieContext : DbContext
     {
     }
 
-    public DbSet<Movie> Movie { get; set; } = default!;
+    public DbSet<Production> Productions { get; set; } = default!;
+    public DbSet<Movie> Movies { get; set; } = default!;
+    public DbSet<Series> Series { get; set; } = default!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Production>()
+            .HasDiscriminator<string>("ProductionType")
+            .HasValue<Movie>("Movie")
+            .HasValue<Series>("Series");
+    }
 }

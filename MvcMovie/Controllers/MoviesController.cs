@@ -17,16 +17,16 @@ public class MoviesController : Controller
 
     public async Task<IActionResult> Index(string movieGenre, string searchString)
     {
-        if (_context.Movie == null)
+        if (_context.Movies == null)
         {
-            return Problem("Entity set 'MvcMovieContext.Movie' is null.");
+            return Problem("Entity set 'MvcMovieContext.Movies' is null.");
         }
 
-        IQueryable<string> genreQuery = from m in _context.Movie
+        IQueryable<string> genreQuery = from m in _context.Movies
             orderby m.Genre
             select m.Genre!;
 
-        var movies = from m in _context.Movie
+        var movies = from m in _context.Movies
             select m;
 
         if (!string.IsNullOrEmpty(searchString))
@@ -50,7 +50,6 @@ public class MoviesController : Controller
         return View(movieGenreVM);
     }
 
-    // GET: Movies/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -58,7 +57,7 @@ public class MoviesController : Controller
             return NotFound();
         }
 
-        var movie = await _context.Movie
+        var movie = await _context.Movies
             .FirstOrDefaultAsync(m => m.Id == id);
 
         if (movie == null)
@@ -69,16 +68,16 @@ public class MoviesController : Controller
         return View(movie);
     }
 
-    // GET: Movies/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: Movies/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+    public async Task<IActionResult> Create(
+        [Bind("Id,Title,ReleaseDate,Genre,Price,Rating,DurationMinutes")] 
+        Movie movie)
     {
         if (ModelState.IsValid)
         {
@@ -89,21 +88,20 @@ public class MoviesController : Controller
         return View(movie);
     }
 
-    // GET: Movies/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null) return NotFound();
 
-        var movie = await _context.Movie.FindAsync(id);
+        var movie = await _context.Movies.FindAsync(id);
         if (movie == null) return NotFound();
 
         return View(movie);
     }
 
-    // POST: Movies/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+    public async Task<IActionResult> Edit(int id, 
+        [Bind("Id,Title,ReleaseDate,Genre,Price,Rating,DurationMinutes")] Movie movie)
     {
         if (id != movie.Id) return NotFound();
 
@@ -117,7 +115,6 @@ public class MoviesController : Controller
         return View(movie);
     }
 
-    // GET: Movies/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -125,7 +122,7 @@ public class MoviesController : Controller
             return NotFound();
         }
 
-        var movie = await _context.Movie
+        var movie = await _context.Movies
             .FirstOrDefaultAsync(m => m.Id == id);
 
         if (movie == null)
@@ -136,15 +133,14 @@ public class MoviesController : Controller
         return View(movie);
     }
 
-    // POST: Movies/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var movie = await _context.Movie.FindAsync(id);
+        var movie = await _context.Movies.FindAsync(id);
 
         if (movie != null)
-            _context.Movie.Remove(movie);
+            _context.Movies.Remove(movie);
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
