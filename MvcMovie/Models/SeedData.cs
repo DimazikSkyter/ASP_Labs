@@ -10,10 +10,7 @@ public static class SeedData
         using var context = new MvcMovieContext(
             serviceProvider.GetRequiredService<DbContextOptions<MvcMovieContext>>());
 
-        if (context.Movie.Any())
-        {
-            return;
-        }
+        if (context.Movie.Any()) return;
 
         context.Movie.AddRange(
             new Movie

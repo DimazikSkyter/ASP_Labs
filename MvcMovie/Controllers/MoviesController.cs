@@ -17,10 +17,7 @@ public class MoviesController : Controller
 
     public async Task<IActionResult> Index(string movieGenre, string searchString)
     {
-        if (_context.Movie == null)
-        {
-            return Problem("Entity set 'MvcMovieContext.Movie' is null.");
-        }
+        if (_context.Movie == null) return Problem("Entity set 'MvcMovieContext.Movie' is null.");
 
         IQueryable<string> genreQuery = from m in _context.Movie
             orderby m.Genre
@@ -30,14 +27,9 @@ public class MoviesController : Controller
             select m;
 
         if (!string.IsNullOrEmpty(searchString))
-        {
             movies = movies.Where(s => s.Title != null && s.Title.Contains(searchString));
-        }
 
-        if (!string.IsNullOrEmpty(movieGenre))
-        {
-            movies = movies.Where(x => x.Genre == movieGenre);
-        }
+        if (!string.IsNullOrEmpty(movieGenre)) movies = movies.Where(x => x.Genre == movieGenre);
 
         var movieGenreVM = new MovieGenreViewModel
         {
@@ -53,18 +45,12 @@ public class MoviesController : Controller
     // GET: Movies/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
+        if (id == null) return NotFound();
 
         var movie = await _context.Movie
             .FirstOrDefaultAsync(m => m.Id == id);
 
-        if (movie == null)
-        {
-            return NotFound();
-        }
+        if (movie == null) return NotFound();
 
         return View(movie);
     }
@@ -86,6 +72,7 @@ public class MoviesController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
         return View(movie);
     }
 
@@ -120,24 +107,19 @@ public class MoviesController : Controller
     // GET: Movies/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
+        if (id == null) return NotFound();
 
         var movie = await _context.Movie
             .FirstOrDefaultAsync(m => m.Id == id);
 
-        if (movie == null)
-        {
-            return NotFound();
-        }
+        if (movie == null) return NotFound();
 
         return View(movie);
     }
 
     // POST: Movies/Delete/5
-    [HttpPost, ActionName("Delete")]
+    [HttpPost]
+    [ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
